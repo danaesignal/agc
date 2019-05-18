@@ -1,0 +1,11 @@
+{
+  "name": "automated-goblin-capitalist",
+  "version": "1.0.0",
+  "description": "A tool for finding profitable inscription ventures in World of Warcraft",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "D. Williams",
+  "license": "ISC"
+}
