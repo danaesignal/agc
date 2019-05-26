@@ -4,8 +4,10 @@
   "description": "A tool for finding profitable inscription ventures in World of Warcraft",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-backend": "cd backend && npm run build",
+    "dev-start-backend": "cd backend && npm run dev-start",
+    "start-backend": "cd backend && npm run start"
   },
-  "author": "D. Williams",
+  "author": "D. Williams <thedavesignal@gmail.com>",
   "license": "ISC"
 }

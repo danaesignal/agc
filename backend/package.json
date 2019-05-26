@@ -1,12 +1,34 @@
 {
-  "name": "backend",
+  "name": "agc-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Express backend for Automated Goblin Capitalist",
+  "main": "build/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "oldBuild": "npx babel src --out-dir build",
+    "build": "webpack",
+    "dev-start": "babel-watch src/server.js",
+    "start": "node build/server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "D. Williams <thedavesignal@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "blizzard.js": "^3.0.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "mongoose": "^5.5.9",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/runtime": "^7.4.4",
+    "babel-loader": "^8.0.6",
+    "babel-watch": "^7.0.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-node-externals": "^1.7.2"
+  }
 }
