@@ -4,10 +4,10 @@
   "description": "Express backend for Automated Goblin Capitalist",
   "main": "build/server.js",
   "scripts": {
-    "oldBuild": "npx babel src --out-dir build",
     "build": "webpack",
+    "watch": "webpack --watch",
     "dev-start": "babel-watch src/server.js",
-    "start": "node build/server.js"
+    "start": "node build/server.bundle.js"
   },
   "keywords": [],
   "author": "D. Williams <thedavesignal@gmail.com>",
