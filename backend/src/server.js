@@ -2,7 +2,8 @@ import Express from 'express';
 import Dotenv from 'dotenv';
 import Auction from './auction/auction.route.js';
 import Mongoose from 'mongoose';
-const path = require('path');
+// --Imports for NYI features--
+// import Path from 'path';
 
 Dotenv.config();
 
@@ -21,13 +22,10 @@ app.use(Express.urlencoded({extended: false}));
 // Router for AH pricing data
 app.use('/auction', Auction);
 
-// Facilitates access to frontend client
-app.use(Express.static(path.join(__dirname, "../../frontend/build")))
-
-// Serves React client
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../frontend/build", "index.html"));
-});
+// REACT CLIENT STUFF GOES HERE
+// REACT CLIENT STUFF GOES HERE
+// REACT CLIENT STUFF GOES HERE
+// REACT CLIENT STUFF GOES HERE
 
 app.listen(port);
 
