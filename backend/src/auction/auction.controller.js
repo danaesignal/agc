@@ -81,7 +81,8 @@ AuctionController.getItemPrice = async (req, res, next) => {
           {
             server: req.params.server,
             item: listing.item,
-            buyout: listing.buyout,
+            // We want the price *per item*, so we divide buyout by quantity.
+            buyout: listing.buyout/listing.quantity,
           }
         );
         auction.save(function(err) {
