@@ -1,0 +1,78 @@
+.modalControls {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  flex-flow: wrap;
+  justify-content: space-between;
+}
+.loading {
+  font-weight: bold;
+}
+
+.spinningCoin{
+  margin-top: 15px;
+}
+
+.materialsButton {
+  margin: 5px;
+  flex: 1 0 calc(33.3333% - 20px);
+  height: 1.5rem;
+  background: lighten(gray, 20%);
+  border: 1px solid black;
+
+  position: relative;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+  cursor: pointer;
+}
+
+.materialsButton::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.materialsButton:hover::before {
+  opacity: 1;
+}
+
+.materialsButton:active{
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.materialsButton:active::before {
+  transition: opacity 000ms;
+  opacity: 0;
+}
+
+@media (max-width: 768px){
+  .webModalControl {
+    display: none;
+  }
+
+  .materialsButton{
+    margin-left: calc(7.5% + 5px);
+    margin-right: calc(7.5% + 5px);
+  }
+}
+
+@media (min-width: 575px){
+  .materialsButton{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+@media (min-width: 780px){
+  .mobileModalControl {
+    display: none;
+  }
+}

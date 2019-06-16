@@ -5,6 +5,7 @@
 
 import React, { PureComponent } from 'react';
 import Material from './Material/Material.js';
+import classes from './Materials.module.scss';
 
 class Materials extends PureComponent{
   render(){
@@ -22,8 +23,9 @@ class Materials extends PureComponent{
       )
     });
     return (
-      <div>
+      <div className={classes.materials}>
         {materialsList}
+        <div className={classes.tip}>Tip: Items with insufficient auction data are struck-out and disabled.</div>
       </div>
     );
   }
