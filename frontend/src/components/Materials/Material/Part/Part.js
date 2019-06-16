@@ -10,22 +10,37 @@ import React, { PureComponent } from 'react';
 import classes from './Part.module.scss';
 
 class Part extends PureComponent{
-  resolvedPrices = this.props.items.map(item => {
-    return (item[1] * this.props.marketPrices[item[0]]/10000).toFixed(2);
-  });
-  sumPrice = this.resolvedPrices.reduce((total, next) => {
-    return total + next;
-  })
+  resolvedPrices = () => {
+    return this.props.items.map(item => {
+      return (item[1] * this.props.marketPrices[item[0]]/10000).toFixed(2);
+    });
+  };
+  sumPrice = () => {
+    return this.resolvedPrices().reduce((total, next) => {
+      return total + next;
+    });
+  };
 
   render(){
-    return (
-      <div
-        onClick={() => {this.props.changeActiveSource(this.props.context, this.props.index)}}
-        className={this.props.active === this.props.index ? classes.active : null}>
-        {`${this.props.display}: `}
-        {`${this.sumPrice}g.`}
-      </div>
-    );
+    if(this.sumPrice() === "0.00"){
+      return (
+        <div
+          style={{'textDecoration': 'line-through'}}
+          className={this.props.active === this.props.index ? classes.active : null}>
+          {`${this.props.display}: `}
+          {this.sumPrice()}
+        </div>
+      );
+    } else {
+      return (
+        <div
+          onClick={() => {this.props.changeActiveSource(this.props.context, this.props.index)}}
+          className={this.props.active === this.props.index ? classes.active : null}>
+          {`${this.props.display}: `}
+          {`${this.sumPrice()}g`}
+        </div>
+      );
+    }
   }
 }
 

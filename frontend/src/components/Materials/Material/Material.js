@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import Part from './Part/Part';
+import classes from './Material.module.scss';
 
 class Material extends Component{
   partList = () => {
@@ -23,8 +24,8 @@ class Material extends Component{
 
   render(){
     return (
-      <div>
-        {`${this.props.display}:`}
+      <div className={classes.material}>
+        <div>{this.props.display}:</div>
         {this.partList()}
       </div>
     );

@@ -3,13 +3,18 @@
 // auction house data to use.
 
 import React, { PureComponent } from 'react';
-import ServerSelector from './ServerSelector/ServerSelector'
+import ServerSelector from './ServerSelector/ServerSelector';
+import classes from './Header.module.scss';
+import coinPile from '../../Images/coinPile.png';
 
 class Header extends PureComponent{
   render(){
     return (
-      <div>
-        <span>Automated Goblin Capitalist</span>
+      <div className={classes.header}>
+        <div className={classes.fob}>
+          <img src={coinPile} alt=""></img>
+        </div>
+        <div className={classes.headerTitle}>Automated Goblin Capitalist</div>
         <ServerSelector
           changeActiveServer={this.props.changeActiveServer}
           activeServer={this.props.activeServer}

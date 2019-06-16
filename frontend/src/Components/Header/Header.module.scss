@@ -1,0 +1,42 @@
+.header {
+  width: 100%;
+  // height: 2rem;
+  background: lighten(black, 15%);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 5px;
+
+  select{
+    width: 15rem;
+    height: 1.8rem;
+    margin-right: .15rem;
+  }
+}
+
+.headerTitle{
+  color: white;
+  margin-left: 4%;
+}
+
+.fob {
+  display: none;
+}
+
+@media (min-width: 768px){
+  .header {
+    height: 2rem;
+    justify-content: space-between;
+    padding: 0;
+    flex-wrap: nowrap;
+  }
+  .fob{
+    width: 15rem;
+    display:inherit;
+  }
+
+  .headerTitle{
+    margin-left: 0;
+  }
+}

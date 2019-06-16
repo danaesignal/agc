@@ -246,7 +246,8 @@ class ServerSelector extends PureComponent{
       <select
         id="server"
         onChange={() => {this.props.changeActiveServer(document.querySelector('#server').value)}}
-        defaultValue={this.props.activeServer}>
+        defaultValue={this.props.activeServer}
+        style={{'fontFamily': '"Prompt", sans-serif'}}>
         {serverList.map(server => {
           return (
             <option
