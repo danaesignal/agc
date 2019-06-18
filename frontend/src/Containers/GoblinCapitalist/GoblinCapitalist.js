@@ -416,12 +416,12 @@ class GoblinCapitalist extends Component{
       partList.map(async (part) => {
         try{
           // Priming the pump to ensure we have fresh data..
-          await fetch(`/auction/${server}/${part}`, {
-            'headers' : {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          });
+          // await fetch(`/auction/${server}/${part}`, {
+            // 'headers' : {
+              // 'Content-Type': 'application/json',
+              // 'Accept': 'application/json'
+            // }
+          // });
           let response = await fetch(`/auction/${server}/${part}`, {
             'headers' : {
               'Content-Type': 'application/json',

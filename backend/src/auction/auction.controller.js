@@ -10,6 +10,10 @@ const Blizzard = require('blizzard.js').initialize({
   secret: process.env.BLIZZARD_SECRET
 });
 
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 let AuctionController = {}
 
 // Generates an oAuth token for Blizzard's API
@@ -41,6 +45,7 @@ AuctionController.getItemPrice = async (req, res, next) => {
   let apiAuctionData;
   let apiFreshness;
   let dbFreshness;
+  let lowestListing = {};
   const relevantItemIds = [
     124106,
     151565,
@@ -112,44 +117,66 @@ AuctionController.getItemPrice = async (req, res, next) => {
       })
 
       // ... and replacing them with the new auction documents.
-      await Promise.all(
-        apiAuctionData.map(listing => {
-          if(relevantItemIds.includes(listing.item)){
-            let auction = new Auction(
-              {
-                server: req.params.server,
-                item: listing.item,
-                // We want the price *per item*, so we divide buyout by quantity.
-                buyout: listing.buyout/listing.quantity,
-              }
-            );
-            auction.save(function(err) {
-              if (err) return next(err);
-            })
+
+      await apiAuctionData.forEach(listing => {
+        if(relevantItemIds.includes(listing.item)){
+          let auction = new Auction(
+            {
+              server: req.params.server,
+              item: listing.item,
+              // We want the price *per item*, so we divide buyout by quantity.
+              buyout: listing.buyout/listing.quantity,
+            }
+          );
+          if (lowestListing[listing.item] === undefined || lowestListing[listing.item].buyout > auction.buyout){
+            lowestListing[listing.item] = auction;
           }
+        }
+      })
+      await Promise.all(
+        Object.keys(lowestListing).map(listing => {
+          lowestListing[listing].save(function(err) {
+            if (err) return next(err);
+          })
         })
       )
     }
 
-    // Find the lowest price for the item in question, on the server in question...
-    // await sleep(1750);
-    Auction.find(
-      {
-        server: req.params.server,
-        item: req.params.item
-      },
-      ['item', 'buyout'],
-      {
-        sort: {
-          buyout: 1
+    // Wait a moment for data propagation, because we can't seem to stop pulling
+    // in empty records unless we do..
+    await sleep(500)
+
+    // If we just persisted data to the DB, we'll send that local copy instead of
+    // hitting the server again
+    if(lowestListing[req.params.item] !== undefined){
+      let response = {
+        _id: lowestListing[req.params.item]["_id"],
+        item: lowestListing[req.params.item].item,
+        buyout: lowestListing[req.params.item].buyout,
+      };
+      res.send(response);
+    } else {
+      // Otherwise, we find the lowest price for the item in question, on
+      // the server in question...
+      Auction.find(
+        {
+          server: req.params.server,
+          item: req.params.item
+        },
+        ['item', 'buyout'],
+        {
+          sort: {
+            buyout: 1
+          }
+        },
+        function(err, result){
+          if(err) next(err);
+          // .. and serve the document.
+          res.send(result[0]);
         }
-      },
-      function(err, result){
-        // ... And serve that document back to the client.
-        if(err) next(err);
-        res.send(result[0]);
-      }
-    );
+      );
+    }
+
   }
   catch(error){
     console.log(error)
