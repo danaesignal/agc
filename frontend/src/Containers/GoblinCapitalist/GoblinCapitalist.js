@@ -9,6 +9,7 @@ import Materials from '../../Components/Materials/Materials';
 import Header from '../../Components/Header/Header';
 import Inventory from '../../Components/Inventory/Inventory';
 import spinningCoin from '../../Images/spinningCoin.gif';
+import horde from '../../Images/horde.png';
 import classes from './GoblinCapitalist.module.scss';
 
 class GoblinCapitalist extends Component{
@@ -181,7 +182,7 @@ class GoblinCapitalist extends Component{
           {
             // 0: Price, 1: Quantity
             'parts': [[129034, 1]],
-            'display': "Sallow Pigment (AH)"
+            'display': "Sallow Pigment"
           },
           {
             'parts': [[129034, 0.47]],
@@ -200,11 +201,11 @@ class GoblinCapitalist extends Component{
         'partSources': [
           {
             'parts': [[158188, 1]],
-            'display': "Crimson Ink (AH)"
+            'display': "Crimson Ink"
           },
           {
             'parts': [[153636, 1]],
-            'display': "Crimson Pigment (AH)"
+            'display': "Crimson Pigment"
           },
           {
             'parts': [[152505, 3.125]],
@@ -241,11 +242,11 @@ class GoblinCapitalist extends Component{
         'partSources': [
           {
             'parts': [[158187, 1]],
-            'display': "Ultramarine Ink (AH)"
+            'display': "Ultramarine Ink"
           },
           {
             'parts': [[153635, 1]],
-            'display': "Ultramarine Pigment (AH)"
+            'display': "Ultramarine Pigment"
           },
           {
             'parts': [[152505, 1.21]],
@@ -282,11 +283,11 @@ class GoblinCapitalist extends Component{
         'partSources': [
           {
             'parts': [[158189, 1]],
-            'display': "Viridescent Ink (AH)"
+            'display': "Viridescent Ink"
           },
           {
             'parts': [[153669, 1]],
-            'display': "Viridescent Pigment (AH)"
+            'display': "Viridescent Pigment"
           },
           {
             'parts': [[152505, 7.7]],
@@ -492,6 +493,11 @@ class GoblinCapitalist extends Component{
           </div>
           {/* Modal controls for non-mobile view*/}
           {this.generateModalControls("webModalControl")}
+          <div className={classes.footer}>
+            <div>Made with </div>
+            <div><img src={horde} alt={"the Horde"} className={classes.horde}/></div>
+            <div> by <a href={"https://github.com/davesignal"}>Bozwix @ Mal'Ganis</a></div>
+          </div>
         </div>
       );
     } else {
@@ -509,6 +515,11 @@ class GoblinCapitalist extends Component{
           </div>
           <div className={classes.loading}>
             Fetching auction data...
+          </div>
+          <div className={classes.footer}>
+            <div>Made with </div>
+            <div><img src={horde} alt={"the Horde"} className={classes.horde}/></div>
+            <div> by <a href={"https://github.com/davesignal"}>Bozwix @ Mal'Ganis</a></div>
           </div>
         </div>
       );

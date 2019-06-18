@@ -52,6 +52,19 @@
   transition: opacity 000ms;
   opacity: 0;
 }
+.footer {
+  font-size: 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.horde {
+  margin-top: 5px;
+  width: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
 
 @media (max-width: 768px){
   .webModalControl {
@@ -74,5 +87,11 @@
 @media (min-width: 780px){
   .mobileModalControl {
     display: none;
+  }
+
+  .footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
   }
 }
