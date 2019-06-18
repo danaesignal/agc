@@ -10,10 +10,6 @@ const Blizzard = require('blizzard.js').initialize({
   secret: process.env.BLIZZARD_SECRET
 });
 
-const sleep = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 let AuctionController = {}
 
 // Generates an oAuth token for Blizzard's API
@@ -45,7 +41,6 @@ AuctionController.getItemPrice = async (req, res, next) => {
   let apiAuctionData;
   let apiFreshness;
   let dbFreshness;
-  let arrayOfPromises;
   const relevantItemIds = [
     124106,
     151565,
@@ -137,7 +132,7 @@ AuctionController.getItemPrice = async (req, res, next) => {
     }
 
     // Find the lowest price for the item in question, on the server in question...
-    await sleep(1750);
+    // await sleep(1750);
     Auction.find(
       {
         server: req.params.server,
