@@ -144,7 +144,7 @@ AuctionController.getItemPrice = async (req, res, next) => {
 
     // Wait a moment for data propagation, because we can't seem to stop pulling
     // in empty records unless we do..
-    await sleep(500)
+    await sleep(750)
 
     // If we just persisted data to the DB, we'll send that local copy instead of
     // hitting the server again
