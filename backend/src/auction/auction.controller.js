@@ -1,6 +1,6 @@
 import Dotenv from 'dotenv';
 import Fetch from 'node-fetch';
-import Auction from './Auction.model';
+import Auction from './auction.model';
 import FreshnessDate from '../freshnessDate/freshnessDate.model';
 
 Dotenv.config()
