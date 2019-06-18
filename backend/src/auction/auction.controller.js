@@ -10,6 +10,10 @@ const Blizzard = require('blizzard.js').initialize({
   secret: process.env.BLIZZARD_SECRET
 });
 
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 let AuctionController = {}
 
 // Generates an oAuth token for Blizzard's API
@@ -113,29 +117,27 @@ AuctionController.getItemPrice = async (req, res, next) => {
       })
 
       // ... and replacing them with the new auction documents.
-      arrayOfPromises = apiAuctionData.map(listing => {
-        if(relevantItemIds.includes(listing.item)){
-          let auction = new Auction(
-            {
-              server: req.params.server,
-              item: listing.item,
-              // We want the price *per item*, so we divide buyout by quantity.
-              buyout: listing.buyout/listing.quantity,
-            }
-          );
-          const auctionPromise = new Promise((resolve, reject) => {
+      await Promise.all(
+        apiAuctionData.map(listing => {
+          if(relevantItemIds.includes(listing.item)){
+            let auction = new Auction(
+              {
+                server: req.params.server,
+                item: listing.item,
+                // We want the price *per item*, so we divide buyout by quantity.
+                buyout: listing.buyout/listing.quantity,
+              }
+            );
             auction.save(function(err) {
               if (err) return next(err);
             })
-            reject();
-          })
-          return auctionPromise
-        }
-      });
-      Promise.all(arrayOfPromises);
+          }
+        })
+      )
     }
 
     // Find the lowest price for the item in question, on the server in question...
+    await sleep(1750);
     Auction.find(
       {
         server: req.params.server,
