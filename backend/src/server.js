@@ -27,6 +27,6 @@ app.use('/auction', Auction);
 // REACT CLIENT STUFF GOES HERE
 // REACT CLIENT STUFF GOES HERE
 
-app.listen(port);
+app.listen(port, 'localhost');
 
 console.log(`Server running on ${port}...`);
