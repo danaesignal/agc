@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build-backend": "cd backend && npm run build",
+    "build-frontend": "cd frontend && npm run build",
     "dev-start-backend": "cd backend && npm run dev-start",
-    "start-backend": "cd backend && npm run start"
+    "start": "cd backend && npm run start"
   },
   "author": "D. Williams <thedavesignal@gmail.com>",
   "license": "ISC"
