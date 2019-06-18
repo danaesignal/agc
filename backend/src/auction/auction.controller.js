@@ -41,6 +41,43 @@ AuctionController.getItemPrice = async (req, res, next) => {
   let apiAuctionData;
   let apiFreshness;
   let dbFreshness;
+  let arrayOfPromises;
+  const relevantItemIds = [
+    124106,
+    151565,
+    129034,
+    153636,
+    153635,
+    158188,
+    158187,
+    153669,
+    158189,
+    153647,
+    141446,
+    165692,
+    165733,
+    153662,
+    153661,
+    153663,
+    165016,
+    153665,
+    153666,
+    153664,
+    165017,
+    153668,
+    153667,
+    164682,
+    158202,
+    158201,
+    158204,
+    152505,
+    152511,
+    152506,
+    152507,
+    152508,
+    152509,
+    152510
+  ]
 
   try{
     // Retrieves the freshness date for Blizzard's auction data and our stored auction data (if any)
@@ -76,19 +113,26 @@ AuctionController.getItemPrice = async (req, res, next) => {
       })
 
       // ... and replacing them with the new auction documents.
-      apiAuctionData.forEach(listing => {
-        let auction = new Auction(
-          {
-            server: req.params.server,
-            item: listing.item,
-            // We want the price *per item*, so we divide buyout by quantity.
-            buyout: listing.buyout/listing.quantity,
-          }
-        );
-        auction.save(function(err) {
-          if (err) return next(err);
-        })
+      arrayOfPromises = apiAuctionData.map(listing => {
+        if(relevantItemIds.includes(listing.item)){
+          let auction = new Auction(
+            {
+              server: req.params.server,
+              item: listing.item,
+              // We want the price *per item*, so we divide buyout by quantity.
+              buyout: listing.buyout/listing.quantity,
+            }
+          );
+          const auctionPromise = new Promise((resolve, reject) => {
+            auction.save(function(err) {
+              if (err) return next(err);
+            })
+            reject();
+          })
+          return auctionPromise
+        }
       });
+      Promise.all(arrayOfPromises);
     }
 
     // Find the lowest price for the item in question, on the server in question...
