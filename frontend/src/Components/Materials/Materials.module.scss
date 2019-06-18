@@ -8,7 +8,13 @@
 
 .tip {
   font-style: italic;
-  width: 100%;
+  width: calc(100% - 10px);
   border-top: 1px solid black;
   margin-top: 3px;
+}
+
+@media (max-width: 575px){
+  .tip {
+    width: 100%;
+  }
 }
