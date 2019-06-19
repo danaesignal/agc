@@ -372,78 +372,31 @@ class GoblinCapitalist extends Component{
   changeActiveServer = async (server) => {
     this.setState({'dataLoaded': false});
 
-    const parts = {};
-    const partList = [
-      124106,
-      151565,
-      129034,
-      153636,
-      153635,
-      158188,
-      158187,
-      153669,
-      158189,
-      153647,
-      141446,
-      165692,
-      165733,
-      153662,
-      153661,
-      153663,
-      165016,
-      153665,
-      153666,
-      153664,
-      165017,
-      153668,
-      153667,
-      164682,
-      158202,
-      158201,
-      158204,
-      152505,
-      152511,
-      152506,
-      152507,
-      152508,
-      152509,
-      152510
-    ]
+    let parts = {};
 
     sessionStorage.setItem('server', server);
 
-    await Promise.all(
-      partList.map(async (part) => {
-        try{
-          // Priming the pump to ensure we have fresh data..
-          // await fetch(`/auction/${server}/${part}`, {
-            // 'headers' : {
-              // 'Content-Type': 'application/json',
-              // 'Accept': 'application/json'
-            // }
-          // });
-          let response = await fetch(`/auction/${server}/${part}`, {
-            'headers' : {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          });
-          let jsonResponse = await response.json();
-          parts[part] = await jsonResponse.buyout;
+    try{
+      let response = await fetch(`/auction/${server}`, {
+        'headers' : {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }
-        catch(err){
-          // The most likely scenario for hitting this block is if there is no
-          // instances of the item in question for sale. In such an event, the
-          // item's value is given as zero-- there is no amount of money that can
-          // buy an item that isn't for sale and demand for it is clearly so low
-          // that nobody else is trying to sell it, making it effectively worthless.
-          parts[part] = 0;
-        }
-      })
-    ).then( () => {
-      this.setState({'parts': {...parts}});
-      this.setState({'dataLoaded': true});
-    })
+      });
+      let jsonResponse = await response.json();
+      parts = await JSON.parse(jsonResponse.items);
+    }
+    catch(err){
+      // The most likely scenario for hitting this block is if there is no
+      // instances of the item in question for sale. In such an event, the
+      // item's value is given as zero-- there is no amount of money that can
+      // buy an item that isn't for sale and demand for it is clearly so low
+      // that nobody else is trying to sell it, making it effectively worthless.
+      console.log(err);
+      // parts[part] = 0;
+    }
+    this.setState({'parts': {...parts}});
+    this.setState({'dataLoaded': true});
   }
 
   generateModalControls = (context) => {

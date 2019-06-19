@@ -3,5 +3,5 @@ import auctionController from './auction.controller';
 let router = express.Router();
 
 router.get('/test', auctionController.test);
-router.get('/:server/:item', auctionController.authenticate, auctionController.getItemPrice);
+router.get('/:server', auctionController.authenticate, auctionController.getPrices);
 export default router;

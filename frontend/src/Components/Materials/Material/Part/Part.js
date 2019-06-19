@@ -26,16 +26,16 @@ class Part extends PureComponent{
       return (
         <div
           style={{'textDecoration': 'line-through'}}
-          className={this.props.active === this.props.index ? classes.active : null}>
+          className={this.props.active === this.props.index ? classes.active : classes.part}>
           {`${this.props.display}: `}
-          {this.sumPrice()}
+          {`${this.sumPrice()}g`}
         </div>
       );
     } else {
       return (
         <div
           onClick={() => {this.props.changeActiveSource(this.props.context, this.props.index)}}
-          className={this.props.active === this.props.index ? classes.active : null}>
+          className={this.props.active === this.props.index ? classes.active : classes.part}>
           {`${this.props.display}: `}
           {`${this.sumPrice()}g`}
         </div>
