@@ -1,6 +1,6 @@
 {
   "name": "automated-goblin-capitalist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tool for finding profitable inscription ventures in World of Warcraft",
   "main": "index.js",
   "scripts": {
