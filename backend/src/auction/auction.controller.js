@@ -10,7 +10,7 @@ const Blizzard = require('blizzard.js').initialize({
   secret: process.env.BLIZZARD_SECRET
 });
 
-let AuctionController = {}
+const AuctionController = {}
 
 // Generates an oAuth token for Blizzard's API
 AuctionController.authenticate = async (req, res, next) => {

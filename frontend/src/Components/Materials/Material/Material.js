@@ -25,7 +25,7 @@ class Material extends Component{
   render(){
     return (
       <div className={classes.material}>
-        <div>{this.props.display}:</div>
+        <div>{`${this.props.display}:`}</div>
         {this.partList()}
       </div>
     );

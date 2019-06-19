@@ -12,30 +12,29 @@ class Item extends Component{
     } else {
       return (
         <div>
-          Market Value: {this.props.priceToSell}g
+          {`Market Value: ${this.props.priceToSell}g`}
         </div>
       )
     }
   }
 
   profitMargin = () => {
-    let profitColor = "green";
+    let profitColor = "rgba(75, 180, 100, 1)";
     if(this.props.priceToSell !== "0.00"){
       // If the leading character in netProfit is a -, then making the item is a loss
       if(this.props.netProfit[0] === "-") {
-        // this.props.netProfit.shift();
-        profitColor = "red";
+        profitColor = "rgba(218, 82, 82, 1)";
       }
       return (
           <div
             style={{'color': `${profitColor}`, 'fontWeight': 'bold'}}>
-            Net Profit: {this.props.netProfit}g
+            {`Net Profit: ${this.props.netProfit}g`}
           </div>
       )
     } else {
       return (
         <div>
-          No current auctions found!
+          {"No current auctions found!"}
         </div>
       )
     }
@@ -47,7 +46,7 @@ class Item extends Component{
           {this.props.display}
         </div>
         <div>
-          Crafting Cost: {(this.props.priceToCraft*1).toFixed(2)}g
+          {`Crafting Cost: ${(this.props.priceToCraft*1).toFixed(2)}g`}
         </div>
           {this.priceToSell()}
           {this.profitMargin()}

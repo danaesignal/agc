@@ -14,8 +14,9 @@ class Header extends PureComponent{
         <div className={classes.fob}>
           <img src={coinPile} alt=""></img>
         </div>
-        <div className={classes.headerTitle}>Automated Goblin Capitalist</div>
+        <div className={classes.headerTitle}>{"Automated Goblin Capitalist"}</div>
         <ServerSelector
+          serverList={this.props.serverList}
           changeActiveServer={this.props.changeActiveServer}
           activeServer={this.props.activeServer}
         />

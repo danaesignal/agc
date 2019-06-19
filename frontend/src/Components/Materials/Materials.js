@@ -9,8 +9,8 @@ import classes from './Materials.module.scss';
 
 class Materials extends PureComponent{
   render(){
-    let materialsKeys = [...Object.keys(this.props.materials)];
-    let materialsList = materialsKeys.map(materialKey => {
+    const materialsKeys = [...Object.keys(this.props.materials)];
+    const materialsList = materialsKeys.map(materialKey => {
       return (
         <Material
           key={materialKey}
@@ -25,7 +25,7 @@ class Materials extends PureComponent{
     return (
       <div className={classes.materials}>
         {materialsList}
-        <div className={classes.tip}>Tip: Items with insufficient auction data are struck-out and disabled.</div>
+        <div className={classes.tip}>{"Tip: Items with insufficient auction data are struck-out and disabled."}</div>
       </div>
     );
   }
