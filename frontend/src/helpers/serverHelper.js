@@ -39,7 +39,7 @@ serverSelectorHelper.serverListTemplate = (region) => {
       ["blackwing-lair", "Blackwing Lair"],
       ["blades-edge", "Blade's Edge"],
       ["bladefist", "Bladefist"],
-      ["bleeding-hllow", "Bleeding Hollow"],
+      ["bleeding-hollow", "Bleeding Hollow"],
       ["blood-furnace", "Blood Furnace"],
       ["bloodhoof", "Bloodhoof"],
       ["bloodscalp", "Bloodscalp"],
