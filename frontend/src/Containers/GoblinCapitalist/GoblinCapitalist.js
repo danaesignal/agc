@@ -15,13 +15,12 @@ import stateHelpers from '../../helpers/stateHelpers';
 
 class GoblinCapitalist extends Component{
   async componentDidMount(){
-  // Set the server being queried. Either a stored user choice, or Mal'Ganis.
-    const server = sessionStorage.getItem('server') === null ? 'malganis'
-      : sessionStorage.getItem('server');
-      sessionStorage.setItem('server', server);
-
-    // Loading in the initial data for the application.
-    this.changeActiveServer(server);
+    if (localStorage.getItem('server') === null) {
+      localStorage.setItem('server', 'malganis')
+      this.changeActiveServer('malganis');
+    } else {
+      this.changeActiveServer(localStorage.getItem('server'))
+    }
   }
   state = {
     'showModal': false,
@@ -46,9 +45,9 @@ class GoblinCapitalist extends Component{
     this.setState({'dataLoaded': false});
 
     let parts = {};
-
-    sessionStorage.setItem('server', server);
-
+    console.log(localStorage.getItem('server'))
+    localStorage.setItem('server', server);
+    console.log(localStorage.getItem('server'))
     try{
       let response = await fetch(`/auction/${server}`, {
         'headers' : {
@@ -87,7 +86,7 @@ class GoblinCapitalist extends Component{
             <Header
               serverList={this.state.serverList}
               changeActiveServer={this.changeActiveServer}
-              activeServer={sessionStorage.getItem('server')}
+              activeServer={localStorage.getItem('server')}
             />
           </div>
           {/* Modal controls for mobile view*/}
@@ -128,7 +127,7 @@ class GoblinCapitalist extends Component{
           <div>
             <Header
               changeActiveServer={this.changeActiveServer}
-              activeServer={sessionStorage.getItem('server')}
+              activeServer={localStorage.getItem('server')}
             />
           </div>
           <div className={classes.spinningCoin}>
