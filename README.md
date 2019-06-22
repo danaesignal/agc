@@ -19,9 +19,9 @@ Automated Goblin Capitalist lives at https://agc.forgecamp.net.
 
 ## Future Development
 
-###Short term:
+### Short term:
 1. EU region support
 
-###Long term:
+### Long term:
 1. Support for additional trade skills (Alchemy, Enchanting, possibly others)
 2. User accounts with customized item lists
