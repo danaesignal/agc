@@ -13,6 +13,14 @@
   margin-top: 15px;
 }
 
+.mobileModalControl {
+  display: none;
+}
+
+.webModalControl {
+  display: none;
+}
+
 .materialsButton {
   margin: 5px;
   flex: 1 0 calc(33.3333% - 20px);
@@ -66,9 +74,9 @@
   margin-right: 2px;
 }
 
-@media (max-width: 768px){
-  .webModalControl {
-    display: none;
+@media (max-height: 735px), (max-width: 780px){
+  .mobileModalControl {
+    display: block;
   }
 
   .materialsButton{
@@ -84,9 +92,9 @@
   }
 }
 
-@media (min-width: 780px){
-  .mobileModalControl {
-    display: none;
+@media (min-height: 735px) and (min-width: 780px){
+  .webModalControl {
+    display: block;
   }
 
   .footer {
