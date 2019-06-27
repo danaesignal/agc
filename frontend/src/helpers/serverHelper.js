@@ -190,7 +190,7 @@ serverSelectorHelper.serverListTemplate = (region) => {
       ["shattered-halls", "Shattered Halls"],
       ["shattered-hand", "Shattered Hand"],
       ["shuhalo", "Shu'halo"],
-      ["silverhand", "Silver Hand"],
+      ["silver-hand", "Silver Hand"],
       ["silvermoon", "Silvermoon"],
       ["sisters-of-elune", "Sisters of Elune"],
       ["skullcrusher", "Skullcrusher"],
