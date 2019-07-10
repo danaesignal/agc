@@ -45,9 +45,7 @@ class GoblinCapitalist extends Component{
     this.setState({'dataLoaded': false});
 
     let parts = {};
-    console.log(localStorage.getItem('server'))
     localStorage.setItem('server', server);
-    console.log(localStorage.getItem('server'))
     try{
       let response = await fetch(`/auction/${server}`, {
         'headers' : {
