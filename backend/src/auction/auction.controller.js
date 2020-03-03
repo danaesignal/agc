@@ -1,7 +1,6 @@
 import Dotenv from 'dotenv';
 import Fetch from 'node-fetch';
 import Auction from './auction.model';
-import FreshnessDate from '../freshnessDate/freshnessDate.model';
 
 Dotenv.config()
 
@@ -39,8 +38,7 @@ AuctionController.getPrices = async (req, res, next) => {
   let rawAPIAuctionData;
   let jsonAPIAuctionData;
   let apiAuctionData;
-  let apiFreshness;
-  let dbFreshness;
+  let dbAuctionData;
   let lowestListing = {};
   const relevantItemIds = [
     124106,
@@ -81,38 +79,20 @@ AuctionController.getPrices = async (req, res, next) => {
 
   try{
     // Retrieves the freshness date for Blizzard's auction data and our stored auction data (if any)
-    apiResponse = await Blizzard.wow.auction({ origin: 'us', realm: `${req.params.server}`, locale: 'en_US' });
-    apiFreshness = await apiResponse.data.files[0].lastModified;
-    dbFreshness = await FreshnessDate.find({server: req.params.server}, (err) => {
+    dbAuctionData = await Auction.find({server: req.params.server}, (err) => {
       if (err) return next(err);
     });
-
-    // If the API data is fresher than our data, or if our data doesn't exist, refresh the data...
-    if(dbFreshness.length === 0 || dbFreshness[0].freshness !== apiFreshness){
-      // ... by updating our freshness document ...
-      FreshnessDate.update(
-        {server: `${req.params.server}`},
-        {
-          server: `${req.params.server}`,
-          freshness: apiFreshness
-        },
-        {upsert: true},
-        function(err){
-          if (err) return next(err);
-        }
-      );
+    dbAuctionData = dbAuctionData[0];
+    // 4 hours = 14400000 miliseconds
+    // If the auction data is four hours old, or doesn't exist, refresh the data...
+    if(dbAuctionData === undefined || Date.now() - dbAuctionData.freshness >= 14400000){
+      apiResponse = await Blizzard.wow.auction({ origin: 'us', realm: `${req.params.server}`, locale: 'en_US' });
 
       auctionAPIURI = await apiResponse.data.files[0].url;
       rawAPIAuctionData = await Fetch(auctionAPIURI);
       jsonAPIAuctionData = await rawAPIAuctionData.json();
       apiAuctionData = await jsonAPIAuctionData.auctions;
 
-      // ... removing the old auction documents for the server in question ...
-      Auction.deleteMany({ server: req.params.server}, function(err){
-        if (err) return next(err);
-      })
-
-      // ... and replacing them with the new auction documents.
       await apiAuctionData.forEach(listing => {
         if(relevantItemIds.includes(listing.item)){
           // We want the price *per item*, so we divide buyout by quantity.
@@ -126,31 +106,21 @@ AuctionController.getPrices = async (req, res, next) => {
       // If there's no data for a given item, assign it a price of 0 (it cannot be bought for any price)
       relevantItemIds.forEach(id => lowestListing[id] === undefined ? lowestListing[id] = 0 : null)
 
-      let auctionRecord = new Auction(
+      dbAuctionData = await Auction.findOneAndUpdate(
+        {server: `${req.params.server}`},
         {
-          server: req.params.server,
-          items: JSON.stringify(lowestListing)
-        }
-      );
-      auctionRecord.save(function(err){
-        if (err) return next(err);
-      })
-      // If we're updating the record, send our copy of it along to the frontend
-      res.send(auctionRecord);
-    } else {
-      // If the API's data isn't fresher than our own, then we query our DB, find
-      // the server record..
-      Auction.find(
-        {
-          server: req.params.server,
+          server: `${req.params.server}`,
+          items: JSON.stringify(lowestListing),
+          freshness: Date.now()
         },
-        function(err, result){
-          if(err) next(err);
-          // .. and send it to the frontend.
-          res.send(result[0]);
+        {upsert: true,
+        new: true},
+        function(err){
+          if (err) return next(err);
         }
       );
     }
+    res.send(await dbAuctionData);
   }
   catch(error){
     console.log(error)
