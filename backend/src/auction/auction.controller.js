@@ -19,10 +19,6 @@ AuctionController.test = (req, res) => {
 // the specified World of Warcraft server
 
 AuctionController.getPrices = async (req, res, next) => {
-  // let apiResponse;
-  // let auctionAPIURI;
-  // let rawAPIAuctionData;
-  // let jsonAPIAuctionData;
   let apiAuctionData;
   let dbAuctionData;
   let lowestListing = {};
@@ -72,13 +68,6 @@ AuctionController.getPrices = async (req, res, next) => {
     // 4 hours = 14400000 miliseconds
     // If the auction data is four hours old, or doesn't exist, refresh the data...
     if(dbAuctionData === undefined || Date.now() - dbAuctionData.freshness >= 14400000){
-      // apiResponse = await Blizzard.wow.auction({ origin: 'us', realm: `${req.params.server}`, locale: 'en_US' });
-
-      // auctionAPIURI = await apiResponse.data.files[0].url;
-      // rawAPIAuctionData = await Fetch(auctionAPIURI);
-      // jsonAPIAuctionData = await rawAPIAuctionData.json();
-      // apiAuctionData = await jsonAPIAuctionData.auctions;
-
       Axios.get(`https://us.battle.net/oauth/token`, {
           auth: {
             username: KEY,
@@ -116,7 +105,6 @@ AuctionController.getPrices = async (req, res, next) => {
                        id => lowestListing[id] === undefined
                        ? lowestListing[id] = 0
                        : null)
-                     console.log(lowestListing);
                      Auction.findOneAndUpdate({
                        server: `${req.params.server}`
                      }, {
@@ -133,7 +121,6 @@ AuctionController.getPrices = async (req, res, next) => {
                      ).then(updateResponse => {
                        res.send(updateResponse);
                      })
-                     // This is the end of the AuctionResponse .then
                    });
                  }
                )
