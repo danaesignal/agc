@@ -28,7 +28,7 @@
     "babel-loader": "^8.1.0",
     "babel-watch": "^7.4.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "webpack-node-externals": "^1.7.2"
   }
 }
